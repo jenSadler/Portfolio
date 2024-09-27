@@ -1,0 +1,450 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+      .container{
+        display:flex;
+        padding:0;
+        text-align:center;
+
+        align-items:center;
+        justify-content:center;
+        background-color:rgb(240,240,240);
+
+      }
+      .curControls{
+
+
+
+          margin:0;
+          padding:20px;
+          height:100%
+      }
+
+      .futControls{
+
+          //background-color:rgb(239,239,239);
+
+          margin:0;
+          padding:20px;
+          height:100%
+      }
+      .spiderChartContainer{
+        text-align:center;
+        background:url("https://owl.uwo.ca/access/content/group/b872fb33-19af-4b7f-b75c-7229a8df8a77/background.png");
+        flex-grow:1;
+        height:100%;
+        width:675px;
+        border-right:3px solid rgba(255,222,89);
+        border-left:3px solid rgb(118, 142, 253);
+      }
+
+      #spiderChart{
+
+      }
+
+      body{
+        padding:0;
+        margin:0;
+        font-family: 'Source Sans Pro', sans-serif;
+        text-align:center;
+      }
+
+      h2{
+
+        font-size: 14pt;
+        font-weight:bold;
+      }
+      .mainTitle{
+        background:rgba(255,255,255,0.6);
+
+        border-bottom: 3px solid rgba(255,255,255,0.9);
+        color:black;
+        margin:20px 5% 40px;
+        padding:20px;
+      }
+      .mainTitle h1{
+        font-size:25pt;
+        margin:0px 10px 10px 10px;
+
+      }
+
+      .mainTitle p{
+        font-size:11pt;
+        margin:0;
+        padding-bottom:5px;
+      }
+
+      h3{
+
+        font-size: 10pt;
+        font-weight:normal;
+      }
+
+      .licenseContainer{
+
+        font-size:10pt;
+        color:black;
+        padding:10px;
+          margin:30px 5px 5px 5px;
+          display:flex;
+          align-items: left;
+          justify-content: center;
+          text-align:left;
+
+
+              }
+      .licenseContainer p{
+        margin:5px;
+        padding:0px;
+      }
+      .licenseContainer a{
+        color:black;
+      }
+      .licenseContainer img{
+        margin:10px;
+        width:70px
+
+      }
+
+      /* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 15px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+    border-radius:20px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+
+  cursor: pointer; /* Cursor on hover */
+  border-radius:50%;
+  border:none;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  cursor: pointer; /* Cursor on hover */
+  border-radius:50%;
+  border:none;
+}
+
+.curSlider::-webkit-slider-thumb{
+
+  background: rgb(118, 142, 253);
+}
+
+.curSlider::-moz-range-thumb{
+
+  background: rgb(118, 142, 253);
+}
+
+.futSlider::-webkit-slider-thumb{
+  background: rgba(255,222,89,1);
+}
+
+.futSlider::-moz-range-thumb{
+  background: rgba(255,222,89,1);
+}
+    </style>
+  <style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style></head>
+  <body>
+    <div class="container">
+      <div class="curControls">
+        <h2>Current Course Design</h2>
+
+        <h3>Acquisition: <span id="cur-acq-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider curSlider" name="curAcq" id="cur-acquisition" onChange="curChartUpdate();">
+
+        <h3>Investigation: <span id="cur-inv-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider curSlider" name="curInv" id="cur-investigation" onChange="curChartUpdate();">
+
+        <h3>Production: <span id="cur-pro-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider curSlider" name="curPro" id="cur-production" onChange="curChartUpdate();">
+
+        <h3>Practice: <span id="cur-pra-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider curSlider" name="curPra" id="cur-practice" onChange="curChartUpdate();">
+
+        <h3>Discussion: <span id="cur-dis-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider curSlider" name="curDis" id="cur-discussion" onChange="curChartUpdate();">
+
+        <h3>Colaboration: <span id="cur-col-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider curSlider" name="curCol" id="cur-collaboration" onChange="curChartUpdate();">
+
+      </div>
+      <div class="spiderChartContainer"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+        <div class="mainTitle">
+          <h1> Map Your Course Learning Types </h1>
+          <p>Describe the learning types used in your current course design with a scale from 0-10 (0=not used, 10=used a lot). </p>
+          <p> After completing the storyboarding activity, describe the learning types that you will use in your future course design on a scale of 0-10. </p>
+          <p>To save your chart, use the file > print menu, and save as a pdf. Note: if you are having printing errors, ensure the window is relatively small, refresh the page, and then try printing again.</p></div>
+        <canvas id="spiderChart" style="display: block; width: 964px; height: 482px;" width="964" height="482" class="chartjs-render-monitor"></canvas>
+        <div class="licenseContainer">
+          <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/">
+            <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/2.0/88x31.png" />
+          </a>
+          <p>"Map Your Course Learning Types" is part of "ABC Online Course Design" by Western University's Centre for Teaching and Learning and Ryerson University's Centre for Excellence in Teaching and Learning, and is an adaptation of the ABC Learning Design method by Clive Young and Natasa Perovic, UCL (2015) and Learning Types, Laurillard, D. (2012), made available through an <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Attribution-NonCommercial-ShareAlike 4.0 International </a> License.</p></div>
+      </div>
+      <div class="futControls">
+      <h2>Future Course Design</h2>
+        <h3>Acquisition: <span id="fut-acq-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider futSlider" id="fut-acquisition" onChange="futChartUpdate();">
+
+        <h3>Investigation: <span id="fut-inv-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider futSlider" id="fut-investigation" onChange="futChartUpdate();">
+
+        <h3>Production: <span id="fut-pro-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider futSlider" id="fut-production" onChange="futChartUpdate();">
+
+        <h3>Practice: <span id="fut-pra-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider futSlider" id="fut-practice" onChange="futChartUpdate();">
+
+        <h3>Discussion: <span id="fut-dis-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider futSlider" id="fut-discussion" onChange="futChartUpdate();">
+
+        <h3>Colaboration: <span id="fut-col-val"></span></h3>
+        <input type="range" min="0" max="10" value="0" class="slider futSlider" id="fut-collaboration" onChange="futChartUpdate();">
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+      var curAcq = document.getElementById("cur-acquisition").value;
+      var curInv = document.getElementById("cur-investigation").value;
+      var curPro = document.getElementById("cur-production").value;
+      var curPra = document.getElementById("cur-practice").value;
+      var curDis = document.getElementById("cur-discussion").value;
+      var curCol = document.getElementById("cur-collaboration").value;
+
+      document.getElementById("cur-acq-val").innerHTML = curAcq;
+      document.getElementById("cur-inv-val").innerHTML = curInv;
+      document.getElementById("cur-pro-val").innerHTML = curPro;
+      document.getElementById("cur-pra-val").innerHTML = curPra;
+      document.getElementById("cur-dis-val").innerHTML = curDis;
+      document.getElementById("cur-col-val").innerHTML = curCol;
+
+      var futAcq = document.getElementById("fut-acquisition").value;
+      var futInv = document.getElementById("fut-investigation").value;
+      var futPro = document.getElementById("fut-production").value;
+      var futPra = document.getElementById("fut-practice").value;
+      var futDis = document.getElementById("fut-discussion").value;
+      var futCol = document.getElementById("fut-collaboration").value;
+
+      document.getElementById("fut-acq-val").innerHTML = futAcq;
+      document.getElementById("fut-inv-val").innerHTML = futInv;
+      document.getElementById("fut-pro-val").innerHTML = futPro;
+      document.getElementById("fut-pra-val").innerHTML = futPra;
+      document.getElementById("fut-dis-val").innerHTML = futDis;
+      document.getElementById("fut-col-val").innerHTML = futCol;
+
+
+      var ctx = document.getElementById('spiderChart').getContext('2d');
+      var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'radar',
+
+        // The data for our dataset
+        data: {
+          labels: ['Acquisition', 'Investigation', 'Production', 'Practice', 'Discussion', 'Collaboration'],
+
+          datasets: [{
+              label:'Current Course Design',
+              data: [curAcq, curInv, curPro, curPra,curDis,curCol],
+              borderColor:'rgb(118, 142, 253)',
+              backgroundColor:'rgba(118, 142, 253,0.5 )',
+
+
+            },
+            {
+              label:'Future Course Design',
+              data: [futAcq, futInv, futPro, futPra,futDis,futCol],
+              borderWidth:0,
+              backgroundColor:'rgba(255,222,89,0.7)'
+
+            },
+
+          ]
+
+        },
+
+        // Configuration options go here
+
+        options: {
+
+          scale: {
+              angleLines:{
+                display: true,
+              },
+              gridLines:{
+                color:'rgb(200,200,200)'
+                //color:'black',
+              },
+              pointLabels: {
+                fontSize: 20,
+                //fontColor:'rgb(255,255,255)',
+                fontColor:'black',
+              },
+              ticks: {
+                suggestedMin: 0,
+                suggestedMax: 10,
+                fontSize:20,
+                backdropColor:'rgba(255,255,255,0)'
+              }
+          },
+
+          chartArea: {
+            backgroundColor: 'rgba(255,255,255,1)',
+            altBackgroundColor:'rgba(200,200,200,0.3)',
+
+           },
+
+          legend:{
+            display:true,
+            position:'bottom',
+            align:'end',
+            labels: {
+                boxWidth:15,
+                fontSize:15,
+                padding:30,
+                fontColor:'black',
+
+
+            }
+          },
+
+      }
+
+    });
+
+    Chart.pluginService.register({
+    beforeDraw: chart => {
+        const { ctx, scale, config } = chart
+        const { xCenter, yCenter, drawingArea: radius } = scale
+        console.log(radius);
+
+        var angle = (30 * Math.PI / 180);
+        var sideA = radius*Math.sin(angle);
+        var sideB = Math.sqrt((radius*radius) - (sideA*sideA));
+
+        radiusPart = radius/10;
+        for(var i=10;i>=0;i--){
+
+          var modRadius = i*radiusPart;
+          sideA = modRadius*Math.sin(angle);
+          sideB = Math.sqrt((modRadius*modRadius) - (sideA*sideA));
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(xCenter+0,yCenter+modRadius);
+          ctx.lineTo(xCenter+sideB,yCenter+sideA);
+          ctx.lineTo(xCenter+sideB,yCenter-sideA);
+          ctx.lineTo(xCenter-0,yCenter-modRadius);
+          ctx.lineTo(xCenter-sideB,yCenter-sideA);
+          ctx.lineTo(xCenter-sideB,yCenter+sideA);
+          ctx.lineTo(xCenter+0,yCenter+modRadius);
+          ctx.closePath()
+          if(i%2 == 1){
+          ctx.fillStyle = config.options.chartArea.altBackgroundColor;
+          }
+          else{
+            ctx.fillStyle = config.options.chartArea.backgroundColor;
+
+          }
+          ctx.fill();
+        }
+
+
+
+
+
+        ctx.restore();
+    }
+    });
+    function curChartUpdate(){
+      var curAcq = document.getElementById("cur-acquisition").value;
+      var curInv = document.getElementById("cur-investigation").value;
+      var curPro = document.getElementById("cur-production").value;
+      var curPra = document.getElementById("cur-practice").value;
+      var curDis = document.getElementById("cur-discussion").value;
+      var curCol = document.getElementById("cur-collaboration").value;
+
+      document.getElementById("cur-acq-val").innerHTML = curAcq;
+      document.getElementById("cur-inv-val").innerHTML = curInv;
+      document.getElementById("cur-pro-val").innerHTML = curPro;
+      document.getElementById("cur-pra-val").innerHTML = curPra;
+      document.getElementById("cur-dis-val").innerHTML = curDis;
+      document.getElementById("cur-col-val").innerHTML = curCol;
+
+      chart.data.datasets[0].data=[curAcq, curInv, curPro, curPra,curDis,curCol];
+      chart.update();
+    }
+
+    function futChartUpdate(){
+      var futAcq = document.getElementById("fut-acquisition").value;
+      var futInv = document.getElementById("fut-investigation").value;
+      var futPro = document.getElementById("fut-production").value;
+      var futPra = document.getElementById("fut-practice").value;
+      var futDis = document.getElementById("fut-discussion").value;
+      var futCol = document.getElementById("fut-collaboration").value;
+
+      document.getElementById("fut-acq-val").innerHTML = futAcq;
+      document.getElementById("fut-inv-val").innerHTML = futInv;
+      document.getElementById("fut-pro-val").innerHTML = futPro;
+      document.getElementById("fut-pra-val").innerHTML = futPra;
+      document.getElementById("fut-dis-val").innerHTML = futDis;
+      document.getElementById("fut-col-val").innerHTML = futCol;
+
+      chart.data.datasets[1].data=[futAcq, futInv, futPro, futPra,futDis,futCol];
+      chart.update();
+    }
+
+
+    </script>
+
+    <style>
+    .panel {
+      padding: 0 18px;
+
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    </style>
+
+    <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    }
+    </script>
+</body></html>

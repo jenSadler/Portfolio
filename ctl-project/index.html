@@ -1,0 +1,285 @@
+<html>
+<head>
+<script type="text/javascript" src="Chart.bundle.min.js"></script>
+</head>
+<body style="font-family: sans-serif;">
+<div style="width:80%;margin:0 auto">
+    <h1>Central Limit Theorem</h1>
+    <p>From Wikipedia:The central limit theorem (CLT) establishes that, in some situations, when independent random variables are added, their properly normalized sum tends toward a normal distribution (informally a "bell curve") even if the original variables themselves are not normally distributed. The theorem is a key concept in probability theory because it implies that probabilistic and statistical methods that work for normal distributions can be applicable to many problems involving other types of distributions."
+    </p>
+
+    <p>See how adding independent random variables affects the graph by moving the slider below. For a new starting dataset, click the Generate New Dataset Button:</p> <button onClick="generateNewPoints()">Generate New Dataset</button>
+
+    <canvas id="average" style="margin-top:20px"></canvas>
+
+    <div class="slidecontainer" style="width:95%;padding:1.5% 2.5%;margin-top:20px;overflow: hidden; display: block;border-radius:3px;border:1px solid #0D267C;background-color: #8BC9F7">
+
+        <span id="outputBox" style="text-decoration: bold;height:30px;line-height: 30px;position:relative;text-align: center"></span>
+        <input type="range" min="1" max="50" class="slider" value="1" id="myRange" style="height:30px;margin:0;padding:0;overflow: hidden; width:90%;float:right;">
+
+
+    </div>
+
+
+
+
+</div>
+
+
+
+<script>
+
+
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("outputBox");
+    output.innerHTML = slider.value;
+
+    var multiple = 1;
+    var initialDataSet = generateInitialDistribution()
+    var dataset= getAverage(initialDataSet,multiple);
+
+
+
+    var scatterChart = new Chart(average, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                data: dataset,
+                borderColor:"#0D267C",
+                backgroundColor:"#8BC9F7",
+                pointRadius:5,
+                type:'scatter',
+                label:'Probability',
+                usePointStyle:true,
+
+            }]
+        },
+        options: {
+            scales: {
+
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+
+                    }
+                }],
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom',
+                    ticks:{
+                        min: 0,
+                        max: 4
+                    }
+                }]
+            }
+        }
+
+    });
+
+    function generateNewPoints(){
+        slider.value = 1;
+        output.innerHTML = 1;
+        var dataSet = generateInitialDistribution();
+        initialDataSet = dataSet;
+        updateChart(dataSet,scatterChart);
+
+    }
+
+    function generateInitialDistribution(){
+        //var dataset = [{"x":0,"y":0.4},{"x":1,"y":0.1},{"x":2,"y":0},{"x":3,"y":0.2},{"x":4,"y":0.3}];
+        var dataset = chooseNumbers(1)
+
+        return dataset;
+    }
+
+    function roll(min,max) {
+        return Math.floor(Math.random()*max*10 + min*10)/10;
+    }
+
+    function chooseNumbers(numbersAddTo) {
+        var a = 0;
+        var b = 0;
+        var c = 0;
+        var d = 0;
+        var e = 0;
+
+
+        while (a+b+c+d+e !== numbersAddTo) {
+            a = roll(0,numbersAddTo);
+            b = roll(0,numbersAddTo);
+            c = roll(0,numbersAddTo);
+            d = roll(0,numbersAddTo);
+            e = roll(0,numbersAddTo);
+        }
+
+        return [{"x":0,"y":a},{"x":1,"y":b},{"x":2,"y":c},{"x":3,"y":d},{"x":4,"y":e}];
+    }
+
+  /*  function generateRandomInitialDistribution(initialNum){
+        var dataSet = [];
+        for(var i=0;i<initialNum;i++){
+            randomNum =Math.random();
+            dataSet.push({"x":i,"y":Math.round(randomNum*1e2)/100});
+        }
+        console.log(dataSet);
+        return dataSet;
+
+    }*/
+
+
+    function getAverage(dataset, multiple){
+        var mult1 = dataset;
+        var mult2 = averageHelper(mult1,mult1, multiple);
+        var mult3 = averageHelper(mult1,mult2, multiple)
+        var mult4 = averageHelper(mult1,mult3, multiple);
+        var mult5 = averageHelper(mult1,mult4, multiple);
+        var mult6 = averageHelper(mult1,mult5, multiple);
+        var mult7 = averageHelper(mult1,mult6, multiple);
+        var mult8 = averageHelper(mult1,mult7, multiple);
+        var mult9 = averageHelper(mult1,mult8, multiple);
+        var mult10 = averageHelper(mult1,mult9, multiple);
+
+        var mult11 = averageHelper(mult1,mult10, multiple);
+        var mult12 = averageHelper(mult1,mult11, multiple);
+        var mult13 = averageHelper(mult1,mult12, multiple);
+        var mult14 = averageHelper(mult1,mult13, multiple);
+        var mult15 = averageHelper(mult1,mult14, multiple);
+        var mult16 = averageHelper(mult1,mult15, multiple);
+        var mult17 = averageHelper(mult1,mult16, multiple);
+        var mult18 = averageHelper(mult1,mult17, multiple);
+        var mult19 = averageHelper(mult1,mult18, multiple);
+        var mult20 = averageHelper(mult1,mult19, multiple);
+
+        var mult21 = averageHelper(mult1,mult20, multiple);
+        var mult22 = averageHelper(mult1,mult21, multiple);
+        var mult23 = averageHelper(mult1,mult22, multiple);
+        var mult24 = averageHelper(mult1,mult23, multiple);
+        var mult25 = averageHelper(mult1,mult24, multiple);
+        var mult26 = averageHelper(mult1,mult25, multiple);
+        var mult27 = averageHelper(mult1,mult26, multiple);
+        var mult28 = averageHelper(mult1,mult27, multiple);
+        var mult29 = averageHelper(mult1,mult28, multiple);
+        var mult30 = averageHelper(mult1,mult29, multiple);
+
+        var mult31 = averageHelper(mult1,mult30, multiple);
+        var mult32 = averageHelper(mult1,mult31, multiple);
+        var mult33 = averageHelper(mult1,mult32, multiple);
+        var mult34 = averageHelper(mult1,mult33, multiple);
+        var mult35 = averageHelper(mult1,mult34, multiple);
+        var mult36 = averageHelper(mult1,mult35, multiple);
+        var mult37 = averageHelper(mult1,mult36, multiple);
+        var mult38 = averageHelper(mult1,mult37, multiple);
+        var mult39 = averageHelper(mult1,mult38, multiple);
+
+        var mult40 = averageHelper(mult1,mult39, multiple);
+        var mult41 = averageHelper(mult1,mult40, multiple);
+        var mult42 = averageHelper(mult1,mult41, multiple);
+        var mult43 = averageHelper(mult1,mult42, multiple);
+        var mult44 = averageHelper(mult1,mult43, multiple);
+        var mult45 = averageHelper(mult1,mult44, multiple);
+        var mult46 = averageHelper(mult1,mult45, multiple);
+        var mult47 = averageHelper(mult1,mult46, multiple);
+        var mult48 = averageHelper(mult1,mult47, multiple);
+        var mult49 = averageHelper(mult1,mult48, multiple);
+
+        var mult50 = averageHelper(mult1,mult49, multiple);
+
+        switch(parseInt(multiple)){
+            case 1: return mult1; break;
+            case 2: return mult2; break;
+            case 3: return mult3; break;
+            case 4: return mult4; break;
+            case 5: return mult5; break;
+            case 6: return mult6; break;
+            case 7: return mult7; break;
+            case 8: return mult8; break;
+            case 9: return mult9; break;
+
+            case 10: return mult10; break;
+            case 11: return mult11; break;
+            case 12: return mult12; break;
+            case 13: return mult13; break;
+            case 14: return mult14; break;
+            case 15: return mult15; break;
+            case 16: return mult16; break;
+            case 17: return mult17; break;
+            case 18: return mult18; break;
+            case 19: return mult19; break;
+
+            case 20: return mult20; break;
+            case 21: return mult21; break;
+            case 22: return mult22; break;
+            case 23: return mult23; break;
+            case 24: return mult24; break;
+            case 25: return mult25; break;
+            case 26: return mult26; break;
+            case 27: return mult27; break;
+            case 28: return mult28; break;
+            case 29: return mult29; break;
+
+            case 30: return mult30; break;
+            case 31: return mult31; break;
+            case 32: return mult32; break;
+            case 33: return mult33; break;
+            case 34: return mult34; break;
+            case 35: return mult35; break;
+            case 36: return mult36; break;
+            case 37: return mult37; break;
+            case 38: return mult38; break;
+            case 39: return mult39; break;
+
+            case 40: return mult40; break;
+            case 41: return mult41; break;
+            case 42: return mult42; break;
+            case 43: return mult43; break;
+            case 44: return mult44; break;
+            case 45: return mult45; break;
+            case 46: return mult46; break;
+            case 47: return mult47; break;
+            case 48: return mult48; break;
+            case 49: return mult49; break;
+
+            case 50: return mult50; break;
+            default: alert("Error!"+multiple);
+        }
+
+    }
+    function averageHelper(dataset1, dataset2, multiple){
+
+        var samples = []
+        var allLength = dataset1.length-1 + dataset2.length-1;
+        for(var k=0;k<=allLength;k++){
+            var x = k/multiple;
+            var y = 0;
+            for(var i=0;i<dataset1.length;i++){
+                for(var j=0;j<dataset2.length;j++){
+                    if(i+j==k){
+                        y = y+dataset1[i].y*dataset2[j].y;
+                    }
+                }
+            }
+
+            samples.push({"x":x,"y":y})
+        }
+
+        return samples;
+    }
+
+
+
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+        var slideMultiple = this.value;
+        var newDataset = getAverage(initialDataSet,slideMultiple);
+        updateChart(newDataset,scatterChart);
+    }
+
+    function updateChart(dataset, chart){
+        chart.data.datasets[0].data = dataset;
+        chart.update();
+    }
+
+
+</script>
+</body>
+</html>
